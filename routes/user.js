@@ -3,7 +3,7 @@ const User = require("../models/User");
 const CryptoJS = require("crypto-js");
 const { verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin } = require("../middleware/verifyToken");
 
-// UPDATE
+// UPDATE USER FIELD 
 router.put('/:id', verifyTokenAndAuthorization, async (req, res) => {
     
    if(req.body.password){
@@ -28,7 +28,7 @@ router.put('/:id', verifyTokenAndAuthorization, async (req, res) => {
    }
 })
 
-// DELETE
+// DELETE USER
 router.delete('/:id', verifyTokenAndAuthorization, async (req, res) => {
     try {
         const user = await User.findByIdAndDelete(req.params.id)
@@ -47,6 +47,17 @@ router.get('/find/:id', verifyTokenAndAdmin, async (req, res) => {
         const { password, ...others} = user._doc 
 
         res.status(200).json(others)
+    } catch (error) {
+        res.status(500).json(error)
+    }
+})
+
+// GET ALL USER
+router.get('/', verifyTokenAndAdmin, async (req, res) => {
+    try {
+        // select => for skip password 
+        const users = await User.find().select('-password')        
+        res.status(200).json(users)
     } catch (error) {
         res.status(500).json(error)
     }
