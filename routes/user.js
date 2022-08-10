@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const User = require("../models/User");
 const CryptoJS = require("crypto-js");
-const { verifyToken, verifyTokenAndAuthorization } = require("./middleware/verifyToken");
+const { verifyToken, verifyTokenAndAuthorization } = require("../middleware/verifyToken");
 
 router.put('/:id', verifyTokenAndAuthorization, async (req, res) => {
     
@@ -17,10 +17,13 @@ router.put('/:id', verifyTokenAndAuthorization, async (req, res) => {
         $set : req.body
     }, { new : true})
 
-    res.status(200).json(updatedUser)
+    // to not send a password 
+    const { password, ...others} = updatedUser._doc
+
+    res.status(200).json({...others})
 
    } catch (error) {
-    res.status(500).json(err)
+    res.status(500).json(error)
    }
 })
 
