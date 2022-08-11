@@ -8,6 +8,10 @@ const { verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin } = requir
 router.post('/', verifyTokenAndAdmin, async (req, res) => {
     const newProduct = new Product(req.body)
 
+    if(Product.find({ "title" : newProduct.title }).limit(1)){
+        return res.status(401).json({ message : 'You cannot add a new record from the same product title.' })
+    }
+
     try {
         const savedProduct = await newProduct.save()
         res.status(200).json(savedProduct)
@@ -32,13 +36,12 @@ router.put('/:id', verifyTokenAndAdmin, async (req, res) => {
    }
 })
 
-// DELETE USER
-router.delete('/:id', verifyTokenAndAuthorization, async (req, res) => {
+// DELETE PRODUCT
+router.delete('/:id', verifyTokenAndAdmin, async (req, res) => {
     try {
-        const user = await User.findByIdAndDelete(req.params.id)
-        const { password, ...others} = user._doc 
+        const product = await Product.findByIdAndDelete(req.params.id)
 
-        res.status(200).json({ message : 'User has been deleted.', ...others })
+        res.status(200).json({ message : 'Product has been deleted.', ...product })
     } catch (error) {
         res.status(500).json(error)
     }
