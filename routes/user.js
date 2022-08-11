@@ -74,13 +74,14 @@ router.get('/stats', verifyTokenAndAdmin, async (req, res) => {
     try {
         
         const data = await User.aggregate([
+            // ref schema field createdAt
             { $match : { createdAt : { $gte : lastYear } }},
             { $project : { 
                 month : { $month : "$createdAt" }
             }},
             { $group : {
                 _id : "$month",
-                total : { $sum : 1 },
+                total : { $sum : 1 }, // total user count
             }}
         ])
 
