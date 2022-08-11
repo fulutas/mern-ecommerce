@@ -48,56 +48,43 @@ router.delete('/:id', verifyTokenAndAdmin, async (req, res) => {
     }
 })
 
-// GET USER
-router.get('/find/:id', verifyTokenAndAdmin, async (req, res) => {
+// GET PRODUCT
+router.get('/find/:id', async (req, res) => {
     try {
-        const user = await User.findById(req.params.id)
-        const { password, ...others} = user._doc 
+        const product = await Product.findById(req.params.id)
 
-        res.status(200).json(others)
+        res.status(200).json(product)
     } catch (error) {
         res.status(500).json(error)
     }
 })
 
-// GET ALL USER
-router.get('/', verifyTokenAndAdmin, async (req, res) => {
-    // query.new params convert string to boolean
-    const query = JSON.parse(req.query.new) 
-    try {
-        // If there is new in the query, it returns the last 5 created user information.
-        // select => for skip password 
-        const users = query ? await User.find().sort({ createdAt : -1 }).limit(5) : await User.find().select('-password')        
-        res.status(200).json(users)
-    } catch (error) {
-        res.status(500).json(error)
-    }
-})
+// GET ALL PRODUCTS & QUERY PARAMS
+router.get('/', async (req, res) => {
 
-// GET USER STATS
-router.get('/stats', verifyTokenAndAdmin, async (req, res) => {
-    const date = new Date()
-    const lastYear = new Date(date.setFullYear(date.getFullYear() - 1))
+    const qNew = req.query.new
+    const qCategory = req.query.category
 
     try {
+        let products;
         
-        const data = await User.aggregate([
-            // ref schema field createdAt
-            { $match : { createdAt : { $gte : lastYear } }},
-            { $project : { 
-                month : { $month : "$createdAt" }
-            }},
-            { $group : {
-                _id : "$month",
-                total : { $sum : 1 }, // total user count
-            }}
-        ])
+        // last top 5 product
+        if(qNew){
+            products = await Product.find().sort({ createdAt : -1 }).limit(5)
+        } else if(qCategory){
+            products = await Product.find({ categories : {
+                $in : [qCategory],
+            }}) 
+        }else {
+            products = await Product.find()
+        }
 
-        res.status(200).json(data)
+        res.status(200).json(products)
 
     } catch (error) {
         res.status(500).json(error)
     }
 })
+
 
 module.exports = router
