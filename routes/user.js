@@ -59,7 +59,7 @@ router.get('/', verifyTokenAndAdmin, async (req, res) => {
     try {
         // If there is new in the query, it returns the last 5 created user information.
         // select => for skip password 
-        const users = query ? await User.find().sort({ createdAt : -1 }).limit(1) : await User.find().select('-password')        
+        const users = query ? await User.find().sort({ createdAt : -1 }).limit(5) : await User.find().select('-password')        
         res.status(200).json(users)
     } catch (error) {
         res.status(500).json(error)
