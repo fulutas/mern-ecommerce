@@ -1,10 +1,10 @@
 const router = require("express").Router();
-const Cart = require("../models/Product");
+const Cart = require("../models/Cart");
 const CryptoJS = require("crypto-js");
 const { verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin } = require("../middleware/verifyToken");
 
 
-// CREATE CART
+// CREATE CART (all users can create)
 router.post('/', verifyToken, async (req, res) => {
     const newCart = new Product(req.body)
 
@@ -17,7 +17,7 @@ router.post('/', verifyToken, async (req, res) => {
 })
 
 
-// UPDATE CART
+// UPDATE CART (only logged in users can update)
 router.put('/:id', verifyTokenAndAuthorization, async (req, res) => {
  
    try {
@@ -32,7 +32,7 @@ router.put('/:id', verifyTokenAndAuthorization, async (req, res) => {
    }
 })
 
-// DELETE CART
+// DELETE CART (only logged in users can delete)
 router.delete('/:id', verifyTokenAndAuthorization, async (req, res) => {
     try {
         const cart = await Cart.findByIdAndDelete(req.params.id)
@@ -43,7 +43,7 @@ router.delete('/:id', verifyTokenAndAuthorization, async (req, res) => {
     }
 })
 
-// GET USER CART
+// GET USER CART 
 router.get('/find/:userId', verifyTokenAndAuthorization, async (req, res) => {
     try {
         const cart = await Cart.findOne({ userId : req.params.userId })
@@ -54,7 +54,7 @@ router.get('/find/:userId', verifyTokenAndAuthorization, async (req, res) => {
     }
 })
 
-// GET ALL USERS CART
+// GET ALL USERS CART (only admins can see all cart records)
 router.get('/', verifyTokenAndAdmin, async (req, res) => {
     try {
         const carts = await Cart.find()
