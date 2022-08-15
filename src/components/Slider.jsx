@@ -76,12 +76,13 @@ const Desc = styled.p`
 
 const Slider = () => {
   const [slideIndex, setSlideIndex] = useState(0);
+  const totalSlide = 3
 
   const handleClick = (direction) => {
     if(direction === 'left'){
-      setSlideIndex(slideIndex > 0 ? slideIndex -1 : 3)
+      setSlideIndex(slideIndex > 0 ? slideIndex -1 : totalSlide)
     } else {
-      setSlideIndex(slideIndex < 3 ? slideIndex + 1 : 0)
+      setSlideIndex(slideIndex < totalSlide ? slideIndex + 1 : 0)
     }
   };
 
