@@ -88,5 +88,12 @@ export const popularProducts = [
     id: 10,
     img: "https://images-na.ssl-images-amazon.com/images/I/61S40EOxM2L._AC._SR360,460.jpg",
   },
-
+  {
+    id: 11,
+    img: "https://m.media-amazon.com/images/I/51UPZJWx+bL.jpg",
+  },
+  {
+    id: 12,
+    img: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRERVPF-gVFhF1oyW-d5OUG4voLPo98sPig6SzKQoGQFQ0mwLN5VBUYF-dNa0Qu4_e78m4&usqp=CAU",
+  }
 ];

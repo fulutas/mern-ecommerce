@@ -7,13 +7,24 @@ const Container = styled.div`
   padding: 20px;
 `;
 
+const Title = styled.h1`
+  font-size: 30px;
+  font-weight: 600;
+  margin-left: 1.32rem;
+  margin-bottom: -10px;
+  margin-top: 20px;
+`;
+
 const Categories = () => {
   return (
-    <Container>
-      {categories.map((item) => (
-        <CategoryItem item={item} key={item.id} />
-      ))}
-    </Container>
+    <>
+      <Title>Featured Categories</Title>
+      <Container>
+        {categories.map((item) => (
+          <CategoryItem item={item} key={item.id} />
+        ))}
+      </Container>
+    </>
   );
 };
 
