@@ -54,11 +54,11 @@ export const popularProducts = [
   },
   {
     id: 2,
-    img: "https://cdn.shopify.com/s/files/1/0101/4832/products/Angela_Natural_Tee.png?v=1606780388",
+    img: "https://zeekit.me/landing/static/media/fullBody9.efcb1b46.png",
   },
   {
     id: 3,
-    img: "https://www.prada.com/content/dam/pradanux_products/U/UCS/UCS319/1YOTF010O/UCS319_1YOT_F010O_S_182_SLF.png",
+    img: "https://www.zhoppers.com/storage/media/iGD415a1VJgZ7nStcGToVs3PbZDUFaNAX0CbVOdc.jpeg",
   },
   {
     id: 4,
@@ -74,10 +74,19 @@ export const popularProducts = [
   },
   {
     id: 7,
-    img: "https://www.vintageindustries.nl/download_front/qympzk1762/2217_Arrow_Jacket_Forest.png",
+    img: "https://i5.walmartimages.com/asr/d8632afd-d0c9-49a2-a639-a090c2fc5848.bbe083089eeb0c78d78bcb87ea11d329.jpeg",
   },
   {
     id: 8,
     img: "https://www.pngarts.com/files/3/Women-Jacket-PNG-High-Quality-Image.png",
   },
+  {
+    id: 9,
+    img: "https://image.s5a.com/is/image/saks/0400015799047_BLUEGRAY?wid=480&hei=640&qlt=90&resMode=sharp2&op_usm=0.9,1.0,8,0",
+  },
+  {
+    id: 10,
+    img: "https://images-na.ssl-images-amazon.com/images/I/61S40EOxM2L._AC._SR360,460.jpg",
+  },
+
 ];
