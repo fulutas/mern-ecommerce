@@ -16,10 +16,10 @@ const Title = styled.h1`
   margin-bottom: -10px;
 `;
 
-const Products = () => {
+const Products = ({ title }) => {
   return (
     <>  
-      <Title>Popular Products</Title>
+      <Title>{title ? title : ''}</Title>
       <Container>
         {popularProducts.map((item) => (
           <Product item={item} key={item.id} />
