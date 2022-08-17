@@ -59,6 +59,7 @@ const Products = ({ title, category, filters, sort }) => {
         {filteredProducts.map((item) => (
           <Product item={item} key={item.id} />
         ))}
+        {!filteredProducts.length && 'Product not found.'}
       </Container>
     </>
   );

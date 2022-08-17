@@ -12,6 +12,7 @@ const Container = styled.div``;
 
 const Title = styled.h1`
   margin: 20px;
+  text-transform: capitalize;
   ${mobile({ marginTop: "5rem" })}
 `;
 
@@ -68,7 +69,7 @@ const ProductList = () => {
     <Container>
       <Announcement />
       <Navbar />
-      <Title>Dresses</Title>
+      <Title>{category}</Title>
       <Desc>
         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Fuga sapiente
         temporibus soluta illum similique? Deleniti.
