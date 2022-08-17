@@ -1,3 +1,5 @@
+// Product Card Item Component
+
 import styled from "styled-components";
 import {
   Search as SearchIcon,
