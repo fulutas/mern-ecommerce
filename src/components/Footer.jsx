@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { mobile } from "../responsive";
+
 import {
   Facebook,
   Instagram,
@@ -13,6 +15,8 @@ import {
 
 const Container = styled.div`
   display: flex;
+  ${mobile({ flexDirection : 'column'})}
+
 `;
 const Left = styled.div`
   flex: 1;
@@ -45,9 +49,11 @@ const Center = styled.div`
   flex: 1;
   padding: 20px;
 `;
+
 const Right = styled.div`
   flex: 1;
   padding: 20px;
+  ${mobile({ backgroundColor : '#fff8f8'})}
 `;
 
 const Title = styled.h3`

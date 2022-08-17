@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Logo from "../components/Logo";
+import { mobile } from "../responsive";
 
 const Container = styled.div`
   width: 100vw;
@@ -26,11 +27,13 @@ const Wrapper = styled.div`
   width: 30%;
   padding: 20px;
   background-color: #fff;
+  ${mobile({ width : '75%'})}
 `;
 
 const Title = styled.h1`
   font-size: 24px;
   font-weight: 500;
+  ${mobile({ fontSize : '17px'})}
 `;
 
 const Form = styled.form`
@@ -59,6 +62,7 @@ const Button = styled.button`
   border-radius: 5px;
   margin-top: 10px;
   margin-bottom: 10px;
+  ${mobile({ width : '100%', fontSize : '14px'})}
 `;
 
 const Link = styled.a`

@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
+import { mobile } from "../responsive";
 
 import {
   FavoriteBorder,
@@ -15,6 +16,7 @@ const Container = styled.div``;
 
 const Wrapper = styled.div`
   padding: 20px;
+  ${mobile({ padding : '10px'})}
 `;
 
 const TitleContainer = styled.div`
@@ -23,8 +25,10 @@ const TitleContainer = styled.div`
 `;
 
 const Title = styled.h1`
-  font-weight: 400;
+  font-weight: 600;
   text-align: left;
+  ${mobile({ fontSize : '24px'})}
+
 `;
 
 const Top = styled.div`
@@ -32,6 +36,7 @@ const Top = styled.div`
   justify-content: space-between;
   align-items: center;
   margin: 20px 20px 20px 20px;
+  ${mobile({ marginTop : '6rem'})}
 `;
 
 const TopButton = styled.button`
@@ -49,6 +54,7 @@ const TopButton = styled.button`
   align-items: center;
   width: 200px;
   height: 40px;
+  ${mobile({ marginLeft : '10px', width : '150px', height : '50px', textAlign : 'center', fontSize : '14px'})}
 
   &:hover {
     opacity: 0.8;
@@ -59,6 +65,7 @@ const TopTexts = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  ${mobile({ display : 'none'})}
 `;
 
 const TopText = styled.span`
@@ -75,6 +82,8 @@ const Bottom = styled.div`
   display: flex;
   justify-content: space-between;
   margin: 7px 20px 20px 20px;
+  ${mobile({ flexDirection : 'column'})}
+
 `;
 
 const Info = styled.div`
@@ -85,6 +94,7 @@ const Product = styled.div`
   display: flex;
   justify-content: space-between;
   margin-top: 10px;
+  ${mobile({ flexDirection : 'column'})}
 `;
 
 const ProductDetail = styled.div`
@@ -135,6 +145,8 @@ const PriceDetail = styled.div`
 const ProductAmountContainer = styled.div`
   display: flex;
   align-items: center;
+  ${mobile({ marginTop : '20px', marginBottom : '15px'})}
+
 `;
 
 const ProductAmount = styled.div`
@@ -143,11 +155,14 @@ const ProductAmount = styled.div`
   font-weight: 500;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen,
     Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    ${mobile({ margin : '5px 15px'})}
+
 `;
 
 const ProductPrice = styled.div`
   font-size: 25px;
   font-weight: 500;
+  ${mobile({ marginBottom : '20px'})}
 `;
 
 const Hr = styled.hr`
@@ -164,11 +179,13 @@ const Summary = styled.div`
   height: 420px;
   position: sticky;
   top: 10px;
+  ${mobile({ marginTop : '20px'})}
 `;
 
 const SummaryTitle = styled.h1`
-  font-weight: 400;
+  font-weight: 600;
   letter-spacing: -1px;
+  ${mobile({ fontSize : '24px'})}
 `;
 
 const SummaryItem = styled.div`

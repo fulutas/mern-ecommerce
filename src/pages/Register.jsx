@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import Logo from "../components/Logo";
+import { mobile } from "../responsive";
 
 const Container = styled.div`
   width: 100vw;
@@ -26,16 +27,20 @@ const Wrapper = styled.div`
   width: 40%;
   padding: 20px;
   background-color: #fff;
+  ${mobile({ width : '75%'})}
 `;
 
 const Title = styled.h1`
   font-size: 24px;
   font-weight: 500;
+  ${mobile({ fontSize : '17px'})}
+
 `;
 
 const Form = styled.form`
   display: flex;
   flex-wrap: wrap;
+  ${mobile({ flexDirection : 'column'})}
 `;
 
 const Input = styled.input`
@@ -61,6 +66,7 @@ const Button = styled.button`
   font-weight: 700;
   cursor: pointer;
   border-radius: 5px;
+  ${mobile({ width : '100%', fontSize : '14px'})}
 `;
 
 const Register = () => {
