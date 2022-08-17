@@ -10,6 +10,7 @@ const Container = styled.div`
   justify-content: center;
   flex-direction: column;
 `;
+
 const Title = styled.h1`
   font-size: 60px;
   margin-bottom: 20px;
@@ -21,6 +22,7 @@ const Desc = styled.div`
   margin-bottom: 20px;
   ${mobile({ textAlign: "center", fontSize : '14px' })}
 `;
+
 const InputContainer = styled.div`
   width: 50%;
   height: 40px;
@@ -30,11 +32,13 @@ const InputContainer = styled.div`
   border: 1px solid lightgray;
   ${mobile({ width: "80%" })}
 `;
+
 const Input = styled.input`
   border: none;
   flex: 8;
   padding-left: 20px;
 `;
+
 const Button = styled.button`
   flex: 1;
   border: none;
