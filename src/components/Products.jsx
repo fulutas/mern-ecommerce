@@ -37,7 +37,6 @@ const Products = ({ title, category, filters, sort }) => {
     };
 
     getProducts();
-
   }, [category]);
 
   useEffect(() => {
@@ -49,17 +48,31 @@ const Products = ({ title, category, filters, sort }) => {
           )
         )
       );
-
   }, [products, category, filters]);
+
+  useEffect(() => {
+    if (sort === "newest") {
+      setFilteredProducts((prevData) =>
+        [...prevData].sort((a, b) => a.createdAt - b.createdAt)
+      );
+    } else if (sort === "asc") {
+      setFilteredProducts((prevData) =>
+        [...prevData].sort((a, b) => a.price - b.price)
+      );
+    } else {
+      setFilteredProducts((prevData) =>
+        [...prevData].sort((a, b) => b.price - a.price)
+      );
+    }
+  }, [sort]);
 
   return (
     <>
       <Title>{title ? title : ""}</Title>
       <Container>
-        {filteredProducts.map((item) => (
-          <Product item={item} key={item.id} />
-        ))}
-        {!filteredProducts.length && 'Product not found.'}
+        {category
+          ? filteredProducts.map((item) => ( <Product item={item} key={item.id} /> ))
+          : products.slice(0,6).map((item) => <Product item={item} key={item.id} />)}
       </Container>
     </>
   );

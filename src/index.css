@@ -2,8 +2,12 @@
 
 * {
   margin: 0;
-  outline : 0;
+  outline: 0;
   box-sizing: border-box;
+}
+
+html, body {
+  scroll-behavior: smooth;
 }
 
 body {
@@ -17,4 +21,9 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+
+.link {
+  text-decoration: none;
+  color: black !important;
 }
