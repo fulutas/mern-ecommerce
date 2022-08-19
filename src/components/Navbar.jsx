@@ -86,8 +86,6 @@ const Navbar = () => {
 
   const quantity = useSelector(state => state.cart.quantity)
 
-
-
   return (
     <Container>
       <Wrapper>
@@ -106,10 +104,11 @@ const Navbar = () => {
         <Right>
           <MenuItem>REGISTER</MenuItem>
           <MenuItem>SIGN IN</MenuItem>
-          <Link to='/cart'>
-          <MenuItem>
-            <Badge badgeContent={quantity} color="primary">
+          <Link to='/cart' className="link">
+          <MenuItem type='cart'>
+            <Badge badgeContent={quantity} color='primary'>
                 <ShoppingCartOutlined />
+                Cart
             </Badge>
           </MenuItem>
           </Link>

@@ -3,6 +3,9 @@ import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { mobile } from "../responsive";
+import StripeCheckout from "react-stripe-checkout";
+import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 
 import {
   FavoriteBorder,
@@ -11,8 +14,10 @@ import {
   Add,
   Remove,
 } from "@mui/icons-material";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axiosClient from "../axios";
+
+const STRIPE_KEY = `${import.meta.env.VITE_API_STRIPE_KEY}`;
 
 const Container = styled.div``;
 
@@ -118,7 +123,7 @@ const Image = styled.img`
   /* border: 1px solid #eee; */
   transition: all 0.3s ease;
 
-  &:hover{
+  &:hover {
     opacity: 0.7;
   }
 `;
@@ -237,8 +242,41 @@ const SummaryButton = styled.button`
 `;
 
 const Cart = () => {
-  
   const cart = useSelector((state) => state.cart);
+  const [stripeToken, setStripeToken] = useState(null);
+  const navigate = useNavigate()
+
+  // Triggered when payment button is clicked
+  const onToken = (token) => {
+    setStripeToken(token)
+  };
+
+  console.log('Stripe Token Data : ', stripeToken);
+
+  useEffect(() => {
+    const makeRequest = async () => {
+
+      try { 
+        const res = await axiosClient.post('/checkout/payment', {
+          tokenId : stripeToken.id,
+          amount : cart.totalPrice * 100
+        });
+
+        console.log('Payment Response Data : ', res.data)
+        
+        navigate('/success-payment', { data : res.data } )
+
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    // Run if token exists and cart total amount is greater than 1
+    if(stripeToken && cart.totalPrice >= 1){
+      makeRequest()
+    }
+
+  }, [stripeToken, cart.totalPrice, navigate])
 
   return (
     <Container>
@@ -250,7 +288,7 @@ const Cart = () => {
           <TopTexts>
             <TopText>
               <ShoppingCartOutlined style={{ marginRight: "5px" }} /> Shopping
-              Bag (2)
+              Bag ({cart.quantity})
             </TopText>
             <TopText>
               <FavoriteBorder style={{ marginRight: "5px" }} /> Your Wishlist
@@ -267,33 +305,37 @@ const Cart = () => {
         </TitleContainer>
         <Bottom>
           <Info>
-            {cart.products.map(product => (
-            <Product>
-              <ProductDetail>
-              <Link className='link' to={`/product/${product._id}`}>
-                <Image src={product.img} />
-               </Link>
-                <Details>
-                  <Link className='link' to={`/product/${product._id}`}>
-                  <ProductName>{product.title}</ProductName>
+            {cart.products.map((product) => (
+              <Product>
+                <ProductDetail>
+                  <Link className="link" to={`/product/${product._id}`}>
+                    <Image src={product.img} />
                   </Link>
-                  <ProductId style={{ fontSize: "14px " }}>
-                  {product._id}
-                  </ProductId>
-                  <ProductColor color={product.color} />
-                  <ProductSize style={{ color: "#6c84fa" }}>{product.size}</ProductSize>
-                </Details>
-              </ProductDetail>
-              <PriceDetail>
-                <ProductAmountContainer>
-                  <Add style={{ fontSize: "16px", color: "#F27A1A" }} />
-                  <ProductAmount>{product.quantity}</ProductAmount>
-                  <Remove style={{ fontSize: "16px", color: "#F27A1A" }} />
-                </ProductAmountContainer>
-                <ProductPrice>$ {product.price * product.quantity}</ProductPrice>
-              </PriceDetail>
-            </Product>
-          ))}
+                  <Details>
+                    <Link className="link" to={`/product/${product._id}`}>
+                      <ProductName>{product.title}</ProductName>
+                    </Link>
+                    <ProductId style={{ fontSize: "14px " }}>
+                      {product._id}
+                    </ProductId>
+                    <ProductColor color={product.color} />
+                    <ProductSize style={{ color: "#6c84fa" }}>
+                      {product.size}
+                    </ProductSize>
+                  </Details>
+                </ProductDetail>
+                <PriceDetail>
+                  <ProductAmountContainer>
+                    <Add style={{ fontSize: "16px", color: "#F27A1A" }} />
+                    <ProductAmount>{product.quantity}</ProductAmount>
+                    <Remove style={{ fontSize: "16px", color: "#F27A1A" }} />
+                  </ProductAmountContainer>
+                  <ProductPrice>
+                    $ {product.price * product.quantity}
+                  </ProductPrice>
+                </PriceDetail>
+              </Product>
+            ))}
             <Hr />
           </Info>
           <Summary>
@@ -313,14 +355,27 @@ const Cart = () => {
             <Hr />
             <SummaryItem type="total">
               <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice type="total">$ {cart.totalPrice}</SummaryItemPrice>
+              <SummaryItemPrice type="total">
+                $ {cart.totalPrice}
+              </SummaryItemPrice>
             </SummaryItem>
-            <SummaryButton>
-              Checkout Now
-              <ArrowForwardIos
-                style={{ fontSize: "14px", marginLeft: "7px" }}
-              />
-            </SummaryButton>
+            <StripeCheckout
+              name="Brand | E-commerce"
+              image="https://static.vecteezy.com/system/resources/previews/006/547/168/non_2x/creative-modern-abstract-ecommerce-logo-design-colorful-gradient-online-shopping-bag-logo-design-template-free-vector.jpg"
+              billingAddress
+              shippingAddress
+              description={`Your total is $${cart.totalPrice}`}
+              amount={cart.totalPrice * 100}
+              token={onToken}
+              stripeKey={STRIPE_KEY}
+            >
+              <SummaryButton>
+                Checkout Now
+                <ArrowForwardIos
+                  style={{ fontSize: "14px", marginLeft: "7px" }}
+                />
+              </SummaryButton>
+            </StripeCheckout>
           </Summary>
         </Bottom>
       </Wrapper>
