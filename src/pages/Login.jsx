@@ -4,6 +4,7 @@ import styled from "styled-components";
 import Logo from "../components/Logo";
 import { login } from "../redux/apiCalls";
 import { mobile } from "../responsive";
+import { Link } from 'react-router-dom';
 
 const Container = styled.div`
   width: 100vw;
@@ -80,7 +81,7 @@ const Error = styled.div`
   font-weight: 500;
 `
 
-const Link = styled.a`
+const Text = styled.span`
   margin: 5px 0px 0px 0px;
   font-size: 13px;
   cursor: pointer;
@@ -129,8 +130,10 @@ const Login = () => {
              SIGN IN
             </Button>
             {error && <Error>Somenthing went wrong...</Error>}
-            <Link>Do not you remember the password?</Link>
-            <Link>Create a new account </Link>
+            <Text>Do not you remember the password?</Text>
+            <Link className="link" to='/register'> 
+              <Text>Create a new account</Text>
+            </Link>
           </Form>
         </Wrapper>
       </Container>

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Logo from "../components/Logo";
 import { mobile } from "../responsive";
@@ -40,6 +41,7 @@ const Title = styled.h1`
 const Form = styled.form`
   display: flex;
   flex-wrap: wrap;
+  flex-direction: column;
   ${mobile({ flexDirection : 'column'})}
 `;
 
@@ -54,8 +56,15 @@ const Input = styled.input`
 
 const Agreement = styled.span`
   font-size: 12px;
-  margin: 20px 0px;
+  margin: 20px 0px 10px;
 `;
+
+const Text = styled.span`
+  margin: 5px 0px 0px 0px;
+  font-size: 13px;
+  cursor: pointer;
+`;
+
 const Button = styled.button`
   width: 40%;
   border: none;
@@ -66,6 +75,7 @@ const Button = styled.button`
   font-weight: 700;
   cursor: pointer;
   border-radius: 5px;
+  margin-top: 10px;
   ${mobile({ width : '100%', fontSize : '14px'})}
 `;
 
@@ -91,6 +101,9 @@ const Register = () => {
               <br />
               <b>PRIVACY POLICY</b>
             </Agreement>
+            <Link className="link" to='/login'> 
+              <Text>Already have an account?</Text>
+            </Link>
             <Button>REGISTER</Button>
           </Form>
         </Wrapper>
