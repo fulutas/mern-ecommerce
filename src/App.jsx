@@ -8,9 +8,11 @@ import Register from "./pages/Register";
 import SuccessPayment from "./pages/SuccessPayment";
 
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 function App() {
-  const user = true;
+  // Get Auth User Detail Redux State
+  const user = useSelector(state => state.user.currentUser)
 
   return (
     <>
