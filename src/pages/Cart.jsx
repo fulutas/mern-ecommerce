@@ -244,39 +244,37 @@ const SummaryButton = styled.button`
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
   const [stripeToken, setStripeToken] = useState(null);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   // Triggered when payment button is clicked
   const onToken = (token) => {
-    setStripeToken(token)
+    setStripeToken(token);
   };
 
-  console.log('Stripe Token Data : ', stripeToken);
+  console.log("Stripe Token Data : ", stripeToken);
 
   useEffect(() => {
     const makeRequest = async () => {
-
-      try { 
-        const res = await axiosClient.post('/checkout/payment', {
-          tokenId : stripeToken.id,
-          amount : cart.totalPrice * 100
+      try {
+        const res = await axiosClient.post("/checkout/payment", {
+          tokenId: stripeToken.id,
+          amount: cart.totalPrice * 100,
         });
 
-        console.log('Payment Response Data : ', res.data)
-        
-        navigate('/success-payment', { data : res.data } )
+        console.log("Payment Response Data : ", res.data);
 
+        // Succes payment send payment data
+        navigate("/success-payment", { state: { data: res.data } });
       } catch (error) {
-        console.log(error)
+        console.log(error);
       }
-    }
+    };
 
     // Run if token exists and cart total amount is greater than 1
-    if(stripeToken && cart.totalPrice >= 1){
-      makeRequest()
+    if (stripeToken && cart.totalPrice >= 1) {
+      makeRequest();
     }
-
-  }, [stripeToken, cart.totalPrice, navigate])
+  }, [stripeToken, cart.totalPrice, navigate]);
 
   return (
     <Container>
