@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Logo from "../components/Logo";
+import Navbar from "../components/Navbar";
 import { mobile } from "../responsive";
 
 const Container = styled.div`
@@ -82,8 +83,9 @@ const Button = styled.button`
 const Register = () => {
   return (
     <>
+      <Navbar/>
       <LogoWrapper>
-        <Logo />
+        {/* <Logo /> */}
       </LogoWrapper>
       <Container>
         <Wrapper>

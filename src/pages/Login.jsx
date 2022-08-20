@@ -5,6 +5,7 @@ import Logo from "../components/Logo";
 import { login } from "../redux/apiCalls";
 import { mobile } from "../responsive";
 import { Link } from 'react-router-dom';
+import Navbar from "../components/Navbar";
 
 const Container = styled.div`
   width: 100vw;
@@ -104,8 +105,9 @@ const Login = () => {
 
   return (
     <>
+      <Navbar/>
       <LogoWrapper>
-        <Logo />
+        {/* <Logo /> */}
       </LogoWrapper>
       <Container>
         <Wrapper>
