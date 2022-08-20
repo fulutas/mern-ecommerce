@@ -15,19 +15,42 @@ import {
 
 import storage from "redux-persist/lib/storage";
 
+const userPersistConfig = {
+  key : 'user',
+  storage,
+  blacklist : ['registerError', 'logoutError', 'error', 'isFetching'] // Now, properties cannot be persisted.
+}
+
+const cartPersistConfig = {
+  key : 'cart',
+  storage,
+}
+
+// !!Deprecated
 const persistConfig = {
   key: "root",
   version: 1,
   storage,
 };
 
-const rootReducer = combineReducers({ user: userReducer, cart: cartReducer });
+// !!Deprecated
+const rootReducer = combineReducers({
+  user: persistReducer(userPersistConfig, userReducer),
+  cart: persistReducer(cartPersistConfig, cartReducer)
+});
 
-// Local Storage persist ( userData, cartData )
+// Local Storage persist:root ( userData, cartData ) !!!Deprecated
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
+const userPersistedReducer = persistReducer(userPersistConfig, userReducer);
+const cartPersistedReducer = persistReducer(cartPersistConfig, cartReducer);
+
+
 export const store = configureStore({
-  reducer: persistedReducer,
+  reducer: {
+    user : userPersistedReducer,
+    cart : cartPersistedReducer
+  },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
