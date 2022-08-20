@@ -26,10 +26,17 @@ router.post("/register", async (req, res) => {
 
 // Login
 router.post("/login", async (req, res) => {
+  
+  if(Object.entries(req.body).length === 0){
+    return res.status(401).json({ message : 'You must fill in all fields.'})
+  }
+
   try { 
     const user = await User.findOne({ username: req.body.username });
     
-    if (!user) res.status(401).json({ message : "Wrong credentials!"})
+    if (!user){
+      return res.status(401).json({ message : "Wrong credentials!"})
+    } 
 
     // DB user password decrypt
     const hashedPassword = CryptoJS.AES.decrypt(
@@ -39,7 +46,9 @@ router.post("/login", async (req, res) => {
 
     const OriginalPassword = hashedPassword.toString(CryptoJS.enc.Utf8)
     
-    if (OriginalPassword !== req.body.password) res.status(401).json({ message : "Wrong credentials!"})
+    if (OriginalPassword !== req.body.password){
+      return res.status(401).json({ message : "Wrong credentials!"})
+    }
 
     const accesToken = jwt.sign({
         id : user._id,
