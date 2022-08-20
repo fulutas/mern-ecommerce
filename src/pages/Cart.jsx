@@ -282,7 +282,9 @@ const Cart = () => {
       <Navbar />
       <Wrapper>
         <Top>
+          <Link to='/' className="link">
           <TopButton>Continue Shopping</TopButton>
+          </Link>
           <TopTexts>
             <TopText>
               <ShoppingCartOutlined style={{ marginRight: "5px" }} /> Shopping

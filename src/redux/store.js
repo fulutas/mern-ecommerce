@@ -1,5 +1,3 @@
-// Global store
-
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import cartReducer from "./CartRedux";
 import userReducer from "./userRedux";

@@ -6,8 +6,10 @@ import {
 } from "@mui/icons-material";
 import Badge from "@mui/material/Badge";
 import { mobile } from "../responsive";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { persistor } from "../redux/store";
+import { logout, logoutFailure } from "../redux/userRedux";
 
 const Container = styled.div`
   height: 60px;
@@ -89,10 +91,20 @@ const Navbar = () => {
   const quantity = useSelector((state) => state.cart.quantity);
   const userData = useSelector((state) => state.user.currentUser);
 
+  const navigate = useNavigate();
+  const dispatch = useDispatch()
+
   console.log(userData);
 
-  const handleLogout = () => {
-    alert('logout')
+  const handleLogout = async () => {
+    try {
+      await persistor.purge() // State clear
+      dispatch(logout())
+      return navigate('/')
+    } catch (error) {
+      dispatch(logoutFailure())
+      console.log(error)
+    }
   }
 
   return (
