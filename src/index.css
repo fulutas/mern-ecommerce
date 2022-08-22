@@ -6,13 +6,11 @@
   box-sizing: border-box;
 }
 
-html, body {
+html {
   scroll-behavior: smooth;
 }
 
 body {
-  margin: 0;
-  box-sizing: border-box;
   font-family: 'Poppins', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

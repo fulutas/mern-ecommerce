@@ -17,19 +17,25 @@ const Container = styled.div``;
 const Wrapper = styled.div`
   padding: 50px;
   display: flex;
+  margin: 20px auto;
+  width: 1200px;
   ${mobile({ padding: "10px", flexDirection: "column", marginTop: "5rem" })}
 `;
 
 const ImgContainer = styled.div`
   flex: 1;
+  width: 100%;
+  height: 600px;
+  cursor: crosshair;
 `;
 
 const Image = styled.img`
   border: 1px solid #e5e5e5;
   border-radius: 6px;
   width: 100%;
-  height: 90vh;
-  object-fit: cover;
+  height: 100%;
+  object-fit: contain;
+  vertical-align: middle;
   ${mobile({ height: "40vh" })}
 `;
 
@@ -177,6 +183,14 @@ const Product = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
+    if (window.scrollY > document.body.offsetHeight) {
+      window.scrollTo(0, 0);
+    } else {
+      window.scrollTo(0, 0);
+    }
+  });
+
+  useEffect(() => {
     const getProduct = async () => {
       try {
         const res = await axiosClient.get("/products/find/" + id);
@@ -198,9 +212,7 @@ const Product = () => {
   };
 
   const addToCart = () => {
-
     dispatch(addProduct({ ...product, quantity, color, size }));
-
   };
 
   return (
@@ -208,9 +220,11 @@ const Product = () => {
       <Announcement />
       <Navbar />
       <Wrapper>
-        <ImgContainer>
-          <Image src={product.img} />
-        </ImgContainer>
+        <div className="galleryContainer" style={{ width: "400px" }}>
+          <ImgContainer>
+            <Image src={product.img} />
+          </ImgContainer>
+        </div>
         <InfoContainer>
           <Title>{product.title}</Title>
           <Desc>{product.desc}</Desc>
