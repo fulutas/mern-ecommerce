@@ -20,7 +20,6 @@ const userPersistConfig = {
   storage,
   blacklist : ['registerError', 'logoutError', 'error', 'isFetching'] // Now, properties cannot be persisted.
 }
-
 const cartPersistConfig = {
   key : 'cart',
   storage,

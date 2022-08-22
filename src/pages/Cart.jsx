@@ -6,6 +6,7 @@ import { mobile } from "../responsive";
 import StripeCheckout from "react-stripe-checkout";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import CartEmptyIcon from '../assets/cart/cart-empty.gif'
 
 import {
   FavoriteBorder,
@@ -189,6 +190,21 @@ const Hr = styled.hr`
   height: 1px;
 `;
 
+const CartEmpty = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+`;
+
+const CartEmptyText = styled.h1`
+  font-size: 1.5rem;
+  margin: 0;
+  font-weight: 400;
+  letter-spacing: -.03rem;
+`;
+
 const Summary = styled.div`
   flex: 1;
   border: 0.5px solid #e5e5e5;
@@ -282,8 +298,8 @@ const Cart = () => {
       <Navbar />
       <Wrapper>
         <Top>
-          <Link to='/' className="link">
-          <TopButton>Continue Shopping</TopButton>
+          <Link to="/" className="link">
+            <TopButton>Continue Shopping</TopButton>
           </Link>
           <TopTexts>
             <TopText>
@@ -306,37 +322,49 @@ const Cart = () => {
         <Bottom>
           <Info>
             {cart.products.map((product) => (
-              <Product>
-                <ProductDetail>
-                  <Link className="link" to={`/product/${product._id}`}>
-                    <Image src={product.img} />
-                  </Link>
-                  <Details>
+              <>
+                <Product>
+                  <ProductDetail>
                     <Link className="link" to={`/product/${product._id}`}>
-                      <ProductName>{product.title}</ProductName>
+                      <Image src={product.img} />
                     </Link>
-                    <ProductId style={{ fontSize: "14px " }}>
-                      {product._id}
-                    </ProductId>
-                    <ProductColor color={product.color} />
-                    <ProductSize style={{ color: "#6c84fa" }}>
-                      {product.size}
-                    </ProductSize>
-                  </Details>
-                </ProductDetail>
-                <PriceDetail>
-                  <ProductAmountContainer>
-                    <Add style={{ fontSize: "16px", color: "#F27A1A" }} />
-                    <ProductAmount>{product.quantity}</ProductAmount>
-                    <Remove style={{ fontSize: "16px", color: "#F27A1A" }} />
-                  </ProductAmountContainer>
-                  <ProductPrice>
-                    $ {product.price * product.quantity}
-                  </ProductPrice>
-                </PriceDetail>
-              </Product>
+                    <Details>
+                      <Link className="link" to={`/product/${product._id}`}>
+                        <ProductName>{product.title}</ProductName>
+                      </Link>
+                      <ProductId style={{ fontSize: "14px " }}>
+                        {product._id}
+                      </ProductId>
+                      <ProductColor color={product.color} />
+                      <ProductSize style={{ color: "#6c84fa" }}>
+                        {product.size}
+                      </ProductSize>
+                    </Details>
+                  </ProductDetail>
+                  <PriceDetail>
+                    <ProductAmountContainer>
+                      <Add style={{ fontSize: "16px", color: "#F27A1A" }} />
+                      <ProductAmount>{product.quantity}</ProductAmount>
+                      <Remove style={{ fontSize: "16px", color: "#F27A1A" }} />
+                    </ProductAmountContainer>
+                    <ProductPrice>
+                      $ {product.price * product.quantity}
+                    </ProductPrice>
+                  </PriceDetail>
+                </Product>
+                <Hr />
+              </>
             ))}
-            <Hr />
+            {!cart.products.length && 
+            
+            <CartEmpty>
+               <img src={CartEmptyIcon} width='50px' height='50px'></img>
+              <CartEmptyText>
+              Your Cart is empty.
+              </CartEmptyText>
+            </CartEmpty>
+            
+            }
           </Info>
           <Summary>
             <SummaryTitle>Order Summary</SummaryTitle>
