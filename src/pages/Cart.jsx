@@ -7,6 +7,8 @@ import StripeCheckout from "react-stripe-checkout";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import CartEmptyIcon from '../assets/cart/cart-empty.gif'
+import { deleteProduct } from "../redux/CartRedux";
+import { useDispatch } from "react-redux";
 
 import {
   FavoriteBorder,
@@ -14,6 +16,7 @@ import {
   ArrowForwardIos,
   Add,
   Remove,
+  DeleteOutlined
 } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import axiosClient from "../axios";
@@ -160,7 +163,7 @@ const PriceDetail = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
+  flex-direction: row;
 `;
 
 const ProductAmountContainer = styled.div`
@@ -181,6 +184,8 @@ const ProductAmount = styled.div`
 const ProductPrice = styled.div`
   font-size: 25px;
   font-weight: 500;
+  margin: 0 auto;
+  color: #F27A1A;
   ${mobile({ marginBottom: "20px" })}
 `;
 
@@ -189,6 +194,40 @@ const Hr = styled.hr`
   border: none;
   height: 1px;
 `;
+
+const Actions = styled.div`
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+`;
+
+const Action = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  cursor: pointer;
+`
+
+const ActionIcon = styled.div`
+  margin-bottom: 5px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &:hover{
+    background: #f5f5f5;
+    border-radius: 50%;
+  }
+`
+
+const ActionsText = styled.span`
+  font-size: 14px;
+`
 
 const CartEmpty = styled.div`
   display: flex;
@@ -261,6 +300,8 @@ const Cart = () => {
   const cart = useSelector((state) => state.cart);
   const [stripeToken, setStripeToken] = useState(null);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
 
   // Triggered when payment button is clicked
   const onToken = (token) => {
@@ -291,6 +332,10 @@ const Cart = () => {
       makeRequest();
     }
   }, [stripeToken, cart.totalPrice, navigate]);
+
+  const handleDeleteCartProduct = (product) => {
+    dispatch(deleteProduct(product))
+  }
 
   return (
     <Container>
@@ -351,6 +396,14 @@ const Cart = () => {
                       $ {product.price * product.quantity}
                     </ProductPrice>
                   </PriceDetail>
+                  <Actions>
+                    <Action onClick={() => handleDeleteCartProduct(product)}>
+                      <ActionIcon>
+                        <svg width="24" height="24"><path fill="#F90000" d="M22.955 3.386a.75.75 0 010 1.5h-1.663l-1.39 16.692a2.32 2.32 0 01-2.31 2.127H6.363a2.318 2.318 0 01-2.31-2.127L2.66 4.886H1a.75.75 0 01-.743-.648L.25 4.136a.75.75 0 01.75-.75h6.306v-.818A2.32 2.32 0 019.466.255L9.625.25h4.705a2.318 2.318 0 012.318 2.318l-.001.818zm-3.168 1.5H4.167L5.55 21.454c.035.424.39.75.815.75h11.227c.426 0 .78-.326.816-.75l1.38-16.568zM9.625 8.875a.75.75 0 01.75.75v7.84a.75.75 0 11-1.5 0v-7.84a.75.75 0 01.75-.75zm4.705 0a.75.75 0 01.75.75v7.84a.75.75 0 11-1.5 0v-7.84a.75.75 0 01.75-.75zm0-7.125H9.625a.818.818 0 00-.818.818v.818h6.34v-.818a.817.817 0 00-.817-.818z" fillRule="evenodd"></path></svg>
+                      </ActionIcon>
+                  <ActionsText>Delete</ActionsText>
+                  </Action>
+                  </Actions>
                 </Product>
                 <Hr />
               </>
