@@ -1,10 +1,10 @@
 ## MERN Stack E-commerce APP - API
 
 ## Branch
-[Backend](https://github.com/fulutas/mern-ecommerce/tree/main) - Node JS - Express JS & MongoDB & Stripe
+[Backend](https://github.com/fulutas/mern-ecommerce/tree/main) - Node JS - Express JS & MongoDB & Stripe & JWT
 
 
-[Frontend](https://github.com/fulutas/mern-ecommerce/tree/client) - React & MUI & Styled Components
+[Frontend](https://github.com/fulutas/mern-ecommerce/tree/client) - React 18 & Material-UI & Redux Toolkit & Vite & Styled Components
 
 
 [Admin Panel](https://github.com/fulutas/mern-ecommerce/tree/admin-panel) - ...
