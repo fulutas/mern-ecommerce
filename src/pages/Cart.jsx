@@ -7,7 +7,7 @@ import StripeCheckout from "react-stripe-checkout";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import CartEmptyIcon from '../assets/cart/cart-empty.gif'
-import { deleteProduct } from "../redux/CartRedux";
+import { deleteProduct, resetCartState } from "../redux/CartRedux";
 import { useDispatch } from "react-redux";
 
 import {
@@ -319,7 +319,7 @@ const Cart = () => {
         });
 
         console.log("Payment Response Data : ", res.data);
-
+        dispatch(resetCartState())
         // Succes payment send payment data
         navigate("/success-payment", { state: { data: res.data } });  
       } catch (error) {
