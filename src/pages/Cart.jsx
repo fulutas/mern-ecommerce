@@ -27,6 +27,7 @@ const Container = styled.div``;
 
 const Wrapper = styled.div`
   padding: 20px;
+  min-height: 500px;
   ${mobile({ padding: "10px" })}
 `;
 
@@ -245,6 +246,26 @@ const CartEmptyText = styled.h1`
   letter-spacing: -.03rem;
 `;
 
+const StartShopping = styled.button`
+  border-radius: 6px;
+  padding: 10px;
+  font-weight: 600;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  background-color: #f27a1a;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 40px;
+  margin-top: 10px;
+  &:hover {
+    opacity: 0.8;
+  }
+`;
+
 const Summary = styled.div`
   flex: 1;
   border: 0.5px solid #e5e5e5;
@@ -307,8 +328,18 @@ const Cart = () => {
   // Triggered when payment button is clicked
   const onToken = (token) => {
     setStripeToken(token);
+    console.log(stripeToken)
   };
 
+  const onOpened = () => {
+    console.log('stripe component opened')
+  }
+
+  const checkCart = () => {
+    if(cart.totalPrice >= 1 && cart.quantity > 0){
+      return true;
+    }
+  }
 
   useEffect(() => {
     const makeRequest = async () => {
@@ -364,9 +395,12 @@ console.log(combineCart)
       <Navbar />
       <Wrapper>
         <Top>
+        {checkCart() && (
           <Link to="/" className="link">
             <TopButton>Continue Shopping</TopButton>
           </Link>
+          )}
+          {checkCart() && (
           <TopTexts>
             <TopText>
               <ShoppingCartOutlined style={{ marginRight: "5px" }} /> Shopping
@@ -377,10 +411,13 @@ console.log(combineCart)
               (0)
             </TopText>
           </TopTexts>
+          )}
+          {checkCart() && (
           <TopButton type="filled">
             Checkout Now
             <ArrowForwardIos style={{ fontSize: "14px", marginLeft: "7px" }} />
           </TopButton>
+          )}
         </Top>
         <TitleContainer>
           <Title>Shopping Cart</Title>
@@ -442,10 +479,16 @@ console.log(combineCart)
               <CartEmptyText>
               Your Cart is empty.
               </CartEmptyText>
+              <Link to='/' className="link">
+              <StartShopping>
+              Start shopping
+              </StartShopping>
+              </Link>
             </CartEmpty>
             
             }
           </Info>
+          {checkCart() && (
           <Summary>
             <SummaryTitle>Order Summary</SummaryTitle>
             <SummaryItem>
@@ -467,7 +510,7 @@ console.log(combineCart)
                 $ {cart.totalPrice}
               </SummaryItemPrice>
             </SummaryItem>
-            <StripeCheckout
+            <StripeCheckout 
               name="Brand | E-commerce"
               image="https://static.vecteezy.com/system/resources/previews/006/547/168/non_2x/creative-modern-abstract-ecommerce-logo-design-colorful-gradient-online-shopping-bag-logo-design-template-free-vector.jpg"
               billingAddress
@@ -475,6 +518,7 @@ console.log(combineCart)
               description={`Your total is $${cart.totalPrice}`}
               amount={cart.totalPrice * 100}
               token={onToken}
+              opened={onOpened}
               stripeKey={STRIPE_KEY}
             >
               <SummaryButton>
@@ -485,6 +529,7 @@ console.log(combineCart)
               </SummaryButton>
             </StripeCheckout>
           </Summary>
+          )}
         </Bottom>
       </Wrapper>
       <Footer />

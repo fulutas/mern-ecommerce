@@ -15,6 +15,8 @@ import {
 
 const Container = styled.div`
   display: flex;
+  background-color: #F1F1F1;
+  min-height: 290px;
   ${mobile({ flexDirection : 'column'})}
 
 `;
