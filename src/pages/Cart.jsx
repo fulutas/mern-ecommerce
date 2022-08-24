@@ -200,11 +200,12 @@ const Actions = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-direction: column;
+  flex-direction: row;
 `;
 
 const Action = styled.div`
   display: flex;
+  flex: 1;
   align-items: center;
   justify-content: center;
   flex-direction: column;
@@ -308,7 +309,6 @@ const Cart = () => {
     setStripeToken(token);
   };
 
-  console.log("Stripe Token Data : ", stripeToken);
 
   useEffect(() => {
     const makeRequest = async () => {
@@ -321,7 +321,7 @@ const Cart = () => {
         console.log("Payment Response Data : ", res.data);
 
         // Succes payment send payment data
-        navigate("/success-payment", { state: { data: res.data } });
+        navigate("/success-payment", { state: { data: res.data } });  
       } catch (error) {
         console.log(error);
       }
@@ -336,6 +336,27 @@ const Cart = () => {
   const handleDeleteCartProduct = (product) => {
     dispatch(deleteProduct(product))
   }
+
+  const handleAddWhishlistProduct = (product) => {
+    alert('Coming soon.')
+  }
+
+  // Product ID'si aynı olup sepete eklenen bedenler aynı ise birleştirir.
+  const combineCart = cart.products.reduce((r, { _id, quantity, size, ...item }) => {
+
+    let temp = r.find(o => o._id === _id && o.size === size);
+
+    if (!temp) {
+      r.push({ _id ,quantity, size, ...item});
+    } else {
+      temp.size = size;
+      temp.quantity += quantity;
+    } 
+    
+    return r; 
+  }, []);
+
+console.log(combineCart)
 
   return (
     <Container>
@@ -366,7 +387,7 @@ const Cart = () => {
         </TitleContainer>
         <Bottom>
           <Info>
-            {cart.products.map((product) => (
+            {combineCart.map((product) => (
               <>
                 <Product>
                   <ProductDetail>
@@ -377,12 +398,12 @@ const Cart = () => {
                       <Link className="link" to={`/product/${product._id}`}>
                         <ProductName>{product.title}</ProductName>
                       </Link>
-                      <ProductId style={{ fontSize: "14px " }}>
+                      <ProductId style={{ fontSize: "14px" }}>
                         {product._id}
                       </ProductId>
                       <ProductColor color={product.color} />
                       <ProductSize style={{ color: "#6c84fa" }}>
-                        {product.size}
+                        {typeof product.size == 'string' ? product.size : product.size[0]}
                       </ProductSize>
                     </Details>
                   </ProductDetail>
@@ -397,6 +418,12 @@ const Cart = () => {
                     </ProductPrice>
                   </PriceDetail>
                   <Actions>
+                  <Action onClick={() => handleAddWhishlistProduct(product)}>
+                      <ActionIcon>
+                        <FavoriteBorder />  
+                      </ActionIcon>
+                  <ActionsText>Add to Wishlist</ActionsText>
+                  </Action>
                     <Action onClick={() => handleDeleteCartProduct(product)}>
                       <ActionIcon>
                         <svg width="24" height="24"><path fill="#F90000" d="M22.955 3.386a.75.75 0 010 1.5h-1.663l-1.39 16.692a2.32 2.32 0 01-2.31 2.127H6.363a2.318 2.318 0 01-2.31-2.127L2.66 4.886H1a.75.75 0 01-.743-.648L.25 4.136a.75.75 0 01.75-.75h6.306v-.818A2.32 2.32 0 019.466.255L9.625.25h4.705a2.318 2.318 0 012.318 2.318l-.001.818zm-3.168 1.5H4.167L5.55 21.454c.035.424.39.75.815.75h11.227c.426 0 .78-.326.816-.75l1.38-16.568zM9.625 8.875a.75.75 0 01.75.75v7.84a.75.75 0 11-1.5 0v-7.84a.75.75 0 01.75-.75zm4.705 0a.75.75 0 01.75.75v7.84a.75.75 0 11-1.5 0v-7.84a.75.75 0 01.75-.75zm0-7.125H9.625a.818.818 0 00-.818.818v.818h6.34v-.818a.817.817 0 00-.817-.818z" fillRule="evenodd"></path></svg>
