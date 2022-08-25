@@ -320,6 +320,9 @@ const SummaryButton = styled.button`
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
+  const user = useSelector((state) => state.user);
+  console.log(user)
+
   const [stripeToken, setStripeToken] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -332,12 +335,18 @@ const Cart = () => {
   };
 
   const onOpened = () => {
-    console.log('stripe component opened')
+    console.log('opened')
   }
 
   const checkCart = () => {
     if(cart.totalPrice >= 1 && cart.quantity > 0){
       return true;
+    }
+  }
+
+  const handleCheckout = () => {
+    if(user.currentUser == null){
+      return navigate('/login')
     }
   }
 
@@ -510,6 +519,7 @@ console.log(combineCart)
                 $ {cart.totalPrice}
               </SummaryItemPrice>
             </SummaryItem>
+            {user.currentUser !== null && (  
             <StripeCheckout 
               name="Brand | E-commerce"
               image="https://static.vecteezy.com/system/resources/previews/006/547/168/non_2x/creative-modern-abstract-ecommerce-logo-design-colorful-gradient-online-shopping-bag-logo-design-template-free-vector.jpg"
@@ -528,6 +538,15 @@ console.log(combineCart)
                 />
               </SummaryButton>
             </StripeCheckout>
+            )}
+            {user.currentUser == null && (
+            <SummaryButton onClick={handleCheckout}>
+                Checkout Now
+                <ArrowForwardIos
+                  style={{ fontSize: "14px", marginLeft: "7px" }}
+                />
+              </SummaryButton>
+              )}
           </Summary>
           )}
         </Bottom>

@@ -66,6 +66,8 @@ const Products = ({ title, category, filters, sort }) => {
     }
   }, [sort]);
 
+  console.log(filteredProducts)
+
   return (
     <>
       <Title>{title ? title : ""}</Title>
