@@ -5,7 +5,11 @@ import "./css/variables.css";
 
 import Home from "./pages/Home/Home";
 
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+} from "react-router-dom";
 import UserList from "./pages/UserList/UserList";
 import { User } from "./pages/User/User";
 import NewUser from "./pages/NewUser/NewUser";
@@ -13,26 +17,45 @@ import ProductList from "./pages/ProductList/ProductList";
 import Product from "./pages/Product/Product";
 import NewProduct from "./pages/NewProduct/NewProduct";
 import Error404 from "./pages/Error404/Error404";
+import Login from "./pages/Login/Login";
+import React from "react";
 
 function App() {
-  
   return (
-    <BrowserRouter>
-      <Topbar />
-      <div className="container">
-        <Sidebar />
-        <Routes>
-          <Route path="*" exact element={<Error404 />} /> 
-          <Route path="/" exact element={<Home />}></Route>
-          <Route path="/users" element={<UserList />}></Route>
-          <Route path="/user/:userId" element={<User />}></Route>
-          <Route path="/newuser" element={<NewUser />}></Route>
-          <Route path="/products" element={<ProductList />}></Route>
-          <Route path="/product/:productId" element={<Product />}></Route>
-          <Route path="/newproduct" element={<NewProduct />}></Route>
-        </Routes>
-      </div> 
-    </BrowserRouter>
+    <Router>
+      <Switch>
+        <Route path="/login">
+          <Login />
+        </Route>
+        <>
+          <Topbar />
+          <div className="container">
+            <Sidebar />
+            <Route exact path="/">
+              <Home />
+            </Route>
+            <Route path="/users">
+              <UserList />
+            </Route>
+            <Route path="/user/:userId">
+              <User />
+            </Route>
+            <Route path="/newuser">
+              <NewUser />
+            </Route>
+            <Route path="/products">
+              <ProductList />
+            </Route>
+            <Route path="/product/:productId">
+              <Product />
+            </Route>
+            <Route path="/newproduct">
+              <NewProduct />
+            </Route>
+          </div>
+        </>
+      </Switch>
+    </Router>
   );
 }
 
