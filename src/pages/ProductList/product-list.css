@@ -1,0 +1,59 @@
+.productList{
+    flex: 5;
+    margin: 20px;
+}
+
+.productListTitleContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.productAddButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    border: none;
+    padding: 16px;
+    background-color: #716BDE;
+    color: #fff;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 600;
+    height: 30px;
+}
+
+.pageTitle{
+    margin-bottom: 10px;
+}
+
+.productListUser{
+    display: flex;
+    align-items: center;
+}
+
+.productListImg{
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 10px;
+}
+
+.productListEdit{
+    border: none;
+    border-radius: 10px;
+    padding: 5px 10px;
+    background-color: #3bb077;
+    color: #FFF;
+    cursor: pointer;
+    margin-right: 20px;
+}
+
+.productListDelete{
+    color: #ff0001;
+    cursor: pointer;
+}

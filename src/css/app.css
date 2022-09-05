@@ -1,0 +1,33 @@
+body {
+  background-color: #F1F5F9;
+}
+
+.container {
+  display: flex;
+}
+
+.link {
+  text-decoration: none;
+  color: unset;
+}
+
+.css-1e2bxag-MuiDataGrid-root .MuiDataGrid-columnHeader:focus, .css-1e2bxag-MuiDataGrid-root .MuiDataGrid-cell:focus {
+  outline: none !important;
+}
+
+.css-1e2bxag-MuiDataGrid-root {
+  height: 41.7vh !important;
+}
+
+.css-f3jnds-MuiDataGrid-columnHeaders {
+  background-color: #F8FAFC !important;
+  text-transform: uppercase;
+}
+
+.MuiDataGrid-row {
+  background-color: #FFFFFF;
+}
+
+.css-17jjc08-MuiDataGrid-footerContainer {
+  background-color: #FFFFFF;
+}
