@@ -5,57 +5,57 @@ import "./css/variables.css";
 
 import Home from "./pages/Home/Home";
 
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from "react-router-dom";
+import { BrowserRouter, Switch, Route, Redirect } from "react-router-dom";
 import UserList from "./pages/UserList/UserList";
 import { User } from "./pages/User/User";
 import NewUser from "./pages/NewUser/NewUser";
 import ProductList from "./pages/ProductList/ProductList";
 import Product from "./pages/Product/Product";
 import NewProduct from "./pages/NewProduct/NewProduct";
-import Error404 from "./pages/Error404/Error404";
 import Login from "./pages/Login/Login";
 import React from "react";
+import { useSelector } from "react-redux";
 
 function App() {
+  const admin = useSelector((state) => state.user.currentUser?.isAdmin);
+
   return (
-    <Router>
+    <BrowserRouter>
       <Switch>
-        <Route path="/login">
+        <Route path="/login">{admin ? <Redirect to="/" /> : <Login />}</Route>
+        {admin ? (
+          <>
+            <Topbar />
+            <div className="container">
+              <Sidebar />
+              <Route path="/" exact>
+                <Home />
+              </Route>
+              <Route path="/users">
+                <UserList />
+              </Route>
+              <Route path="/user/:userId">
+                <User />
+              </Route>
+              <Route path="/newuser">
+                <NewUser />
+              </Route>
+              <Route path="/products">
+                <ProductList />
+              </Route>
+              <Route path="/product/:productId">
+                <Product />
+              </Route>
+              <Route path="/newproduct">
+                <NewProduct />
+              </Route>
+            </div>
+          </>
+        ) : (
           <Login />
-        </Route>
-        <>
-          <Topbar />
-          <div className="container">
-            <Sidebar />
-            <Route exact path="/">
-              <Home />
-            </Route>
-            <Route path="/users">
-              <UserList />
-            </Route>
-            <Route path="/user/:userId">
-              <User />
-            </Route>
-            <Route path="/newuser">
-              <NewUser />
-            </Route>
-            <Route path="/products">
-              <ProductList />
-            </Route>
-            <Route path="/product/:productId">
-              <Product />
-            </Route>
-            <Route path="/newproduct">
-              <NewProduct />
-            </Route>
-          </div>
-        </>
+        )}
       </Switch>
-    </Router>
+    </BrowserRouter>
   );
 }
 

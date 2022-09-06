@@ -1,7 +1,30 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './widget-lg.css'
+import { userRequest } from "../../axios";
+import { format } from 'timeago.js'
 
 const widgetLg = () => {
+
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    const getOrders = async () => {
+      try { 
+        setLoading(true)
+        // last 5 new users request
+        const res = await userRequest.get("orders");
+        setOrders(res.data);
+        setLoading(false)
+      } catch (error) {
+        setLoading(false)
+        console.log(error)
+      }
+    };
+
+    getOrders()
+
+  }, []);
 
   const Button = ({ type }) => {
     return <button className={'widgetLgButton ' + type}>{type}</button>
@@ -17,51 +40,29 @@ const widgetLg = () => {
           <th className="widgetLgTh">Amount</th>
           <th className="widgetLgTh">Status</th>
         </tr>
-        <tr className="widgetLgTr">
+        {orders.length > 0 && orders.slice(0.,4).map(order => (
+        <tr className="widgetLgTr" key={order.userId}>
           <td className="widgetLgUser">
-            <img src="https://images.pexels.com/photos/7562313/pexels-photo-7562313.jpeg?auto=compress&cs=tinysrgb&h=191.25&fit=crop&w=213.75&dpr=1" alt="" className="widgetLgImg" />
-            <span className="widgetLgName">Ava Adore</span>
+            <img src={order.userInfo[0].img} alt="" className="widgetLgImg" />
+            <span className="widgetLgName">{order.userInfo[0].username}</span>
           </td>
-          <td className="widgetLgDate">22 Jun 2022</td>
-          <td className="widgetLgAmount">#700.00</td>
+          <td className="widgetLgDate">{format(order.createdAt)}</td>
+          <td className="widgetLgAmount">${order.amount}</td>
           <td className="widgetLgStatus">
-            <Button type='Approved'></Button>
+            <Button type={order.status}></Button>
           </td>
         </tr>
-        <tr className="widgetLgTr">
-          <td className="widgetLgUser">
-            <img src="https://images.pexels.com/photos/7562313/pexels-photo-7562313.jpeg?auto=compress&cs=tinysrgb&h=191.25&fit=crop&w=213.75&dpr=1" alt="" className="widgetLgImg" />
-            <span className="widgetLgName">Furkan Enes</span>
-          </td>
-          <td className="widgetLgDate">01 Jun 2022</td>
-          <td className="widgetLgAmount">#10.00</td>
-          <td className="widgetLgStatus">
-            <Button type='Approved'></Button>
-          </td>
-        </tr>
-        <tr className="widgetLgTr">
-          <td className="widgetLgUser">
-            <img src="https://images.pexels.com/photos/7562313/pexels-photo-7562313.jpeg?auto=compress&cs=tinysrgb&h=191.25&fit=crop&w=213.75&dpr=1" alt="" className="widgetLgImg" />
-            <span className="widgetLgName">Ahmet Mehmet</span>
-          </td>
-          <td className="widgetLgDate">03 Jun 2022</td>
-          <td className="widgetLgAmount">#22.00</td>
-          <td className="widgetLgStatus">
-            <Button type='Pending'></Button>
-          </td>
-        </tr>
-        <tr className="widgetLgTr">
-          <td className="widgetLgUser">
-            <img src="https://images.pexels.com/photos/7562313/pexels-photo-7562313.jpeg?auto=compress&cs=tinysrgb&h=191.25&fit=crop&w=213.75&dpr=1" alt="" className="widgetLgImg" />
-            <span className="widgetLgName">Luvy Humby</span>
-          </td>
-          <td className="widgetLgDate">07 Jun 2022</td>
-          <td className="widgetLgAmount">#598.00</td>
-          <td className="widgetLgStatus">
-            <Button type='Declined'></Button>
-          </td>
-        </tr>
+       ))}
       </table>
+
+      {!orders.length && !loading && (
+        <div>Does not match any results.</div>
+      )}
+
+      {loading && (
+        <div>Loading...</div>
+      )}
+
     </div>
   )
 }
