@@ -57,7 +57,23 @@ router.get('/find/:userId', verifyTokenAndAuthorization, async (req, res) => {
 // GET ALL ORDERS (only admins can see all cart records)
 router.get('/', verifyTokenAndAdmin, async (req, res) => {
     try {
-        const orders = await Order.find()
+         // All orders without users collection in user info
+        // const orders = await Order.find()
+
+        // All orders with users collection user info
+        const orders = await Order.aggregate([
+          {
+            $lookup : {
+              from: "users",
+              let: {"searchId": {$toObjectId: "$userId"}}, // field userId in orders collection
+              pipeline: [
+                { "$match": { "$expr": { "$eq": [ "$_id", "$$searchId" ] } } }, //  field $_id in users collection
+                { "$project" : {'username' : 1, 'email' : 1, 'isAdmin' : 1, 'img' : 1}} // define which fields are you want to fetch
+              ],
+              as: "userInfo"
+            }
+          }
+        ])
         res.status(200).json(orders)
     } catch (error) {
         res.status(500).json(error)
