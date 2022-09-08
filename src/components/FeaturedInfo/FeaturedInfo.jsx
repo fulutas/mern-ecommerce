@@ -25,8 +25,6 @@ const FeaturedInfo = () => {
 
   },[])
 
-  console.log(income)
-
   const IconByPercantage = () => {
     if(percentage < 0){
       return <ArrowDownward className="featuredIcon negative" />
