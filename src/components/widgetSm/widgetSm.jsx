@@ -4,6 +4,7 @@ import { Visibility } from "@mui/icons-material";
 import { useState } from "react";
 import { useEffect } from "react";
 import { userRequest } from "../../axios";
+import { format } from 'timeago.js'
 
 const widgetSm = () => {
   const [users, setUsers] = useState([]);
@@ -29,7 +30,7 @@ const widgetSm = () => {
 
   return (
     <div className="widgetSm">
-      <span className="widgetSmTitle">New Join Members</span>
+      <span className="widgetSmTitle">New Join Members <span className="widgetBadge">Top 5</span></span>
       <ul className="widgetSmList">
         {users.length > 0 && users.map(user => (
         <li className="widgetSmListItem" key={user._id}>
@@ -39,7 +40,10 @@ const widgetSm = () => {
             className="widgetSmImg"
           />
           <div className="widgetSmUser">
-            <span className="widgetSmUsername">{user.username} {user.isAdmin && ( <span style={{ color : '#f6cd2c'}}><i class="fa-solid fa-crown"></i></span> )} </span>
+            <span className="widgetSmUsername">{user.username}
+            {user.isAdmin && ( <span style={{ color : '#f6cd2c'}}><i className="fa-solid fa-crown"></i></span> )}
+            </span>
+            <span className='userDate'>{format(user.createdAt)}</span>
           </div>
           <button className="widgetSmButton">
             <Visibility className="widgetSmIcon" />

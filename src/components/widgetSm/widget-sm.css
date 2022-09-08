@@ -11,6 +11,15 @@
     font-weight: 600;
 }
 
+.widgetSmTitle .widgetBadge{
+    background-color: rgb(22, 174, 116);
+    padding: 5px;
+    color: #fff;
+    font-size: 11px;
+    border-radius: 10px;
+}
+
+
 .widgetSmImg{
     width:  40px;
     height: 40px;
@@ -39,8 +48,13 @@
     margin-left: 10px;
 }
 
-.widgetSmUsername{
+.widgetSmUser .widgetSmUsername{
     font-weight: 600;
+}
+
+.widgetSmUser .userDate{
+    font-size: 14px;
+    font-weight: 300;
 }
 
 .widgetSmUserTitle{

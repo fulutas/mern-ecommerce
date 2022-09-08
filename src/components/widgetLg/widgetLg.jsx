@@ -34,14 +34,17 @@ const widgetLg = () => {
     <div className='widgetLg'>
       <h3 className='widgetLgTitle'>Latest Transactions</h3>
       <table className="widgetLgTable">
+        <thead>
         <tr className="widgetLgTr">
           <th className="widgetLgTh">Customer</th>
           <th className="widgetLgTh">Date</th>
           <th className="widgetLgTh">Amount</th>
           <th className="widgetLgTh">Status</th>
         </tr>
+        </thead>
         {orders.length > 0 && orders.slice(0.,4).map(order => (
-        <tr className="widgetLgTr" key={order.userId}>
+        <tbody key={order._id}>
+        <tr className="widgetLgTr">
           <td className="widgetLgUser">
             <img src={order.userInfo[0].img} alt="" className="widgetLgImg" />
             <span className="widgetLgName">{order.userInfo[0].username}</span>
@@ -52,6 +55,7 @@ const widgetLg = () => {
             <Button type={order.status}></Button>
           </td>
         </tr>
+        </tbody>
        ))}
       </table>
 

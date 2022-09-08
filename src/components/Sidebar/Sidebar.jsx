@@ -24,7 +24,6 @@ const Sidebar = () => {
   const { pathname } = location;
   const splitLocation = pathname.split("/");
 
-  console.log(splitLocation)
   return (
     <div className="sidebar">
       <div className="sidebarWrapper">
