@@ -38,7 +38,7 @@ const Home = () => {
           [
             ...prev,
             { name: MONTHS[item._id -1], "Active User" : item.total }
-          ]);
+          ].sort((a,b) => a["Active User"] - b["Active User"])); // sort by active user count
         });
       } catch (error) {
         console.log(error);
@@ -48,6 +48,8 @@ const Home = () => {
     getStats()
 
   }, [MONTHS]);
+
+  console.log(userStats)
 
   return (
     <div className="home">
