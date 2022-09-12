@@ -9,9 +9,10 @@ const Login = () => {
   const dispatch = useDispatch();
 
   const handleLogin = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     login(dispatch, { username, password })
   };
+
   return (
     <div className="login-container">
       <div className="formItem">
@@ -30,6 +31,11 @@ const Login = () => {
           placeholder="password"
           id="password"
           onChange={(e) => setPassword(e.target.value)}
+          onKeyUp={(e) => {
+          if (e.key === 'Enter'){ 
+            handleLogin()
+          }
+          }}
         />
       </div>
       <button onClick={handleLogin}>Login</button>
