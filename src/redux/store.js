@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./userRedux";
+import productReducer from "./productRedux";
 
 import {
   persistStore,
@@ -20,11 +21,13 @@ const userPersistConfig = {
   blacklist: ["registerError", "logoutError", "error", "isFetching"], // Now, properties cannot be persisted.
 };
 
+// LocalStorage define
 const userPersistedReducer = persistReducer(userPersistConfig, userReducer);
 
 export const store = configureStore({
   reducer: {
     user: userPersistedReducer,
+    product : productReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

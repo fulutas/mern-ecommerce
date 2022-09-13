@@ -15,6 +15,9 @@ const Chart = ({ title, data, dataKey, grid}) => {
   return (
     <div className="chart">
       <h3 className="chartTitle">{title}</h3>
+      {data.length === 0 && (
+        <div style={{ textAlign : 'center'}}>No data.</div>
+      )}
       <ResponsiveContainer width='99%' aspect={4 / 1}>
         <LineChart data={data}>
             <XAxis dataKey='name' stroke="#716BDE" />

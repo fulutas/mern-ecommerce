@@ -40,7 +40,7 @@ const FeaturedInfo = () => {
       <div className="featuredItem">
         <span className="featuredTitle">Revanue</span>
         <div className="featuredMoneyContainer">
-          <span className="featuredMoney">${income[1] ? income[1].total : 0}</span>
+          <span className="featuredMoney">${income[1] ? income[1]?.total : 0}</span>
           <span className="featuredMoneyRate">   
             %{Math.floor(percentage)}
             <IconByPercantage />
