@@ -80,15 +80,20 @@ router.get('/', verifyTokenAndAdmin, async (req, res) => {
     }
 })
 
-// GET MONTHLY INCOME ORDERS (only admins - last 2 months orders income)
+// GET MONTHLY INCOME ORDERS (only admins - Compared to last month)
 router.get("/income", verifyTokenAndAdmin, async (req, res) => {
+    const productId = req.query.pid;
     const date = new Date();
     const lastMonth = new Date(date.setMonth(date.getMonth() - 1));
     const previousMonth = new Date(new Date().setMonth(lastMonth.getMonth() - 1));
   
     try {
       const income = await Order.aggregate([
-        { $match: { createdAt: { $gte: previousMonth } } },
+        { $match: { createdAt: { $gte: previousMonth },
+         // If there is a product id in the query, find and fetch
+          ...(productId && {
+          products: { $elemMatch : { productId : productId }}
+        }) } },
         {
           $project: {
             month: { $month: "$createdAt" },
