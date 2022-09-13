@@ -7,7 +7,7 @@
 [Frontend](https://github.com/fulutas/mern-ecommerce/tree/client) - React 18 & Material-UI & Redux Toolkit & Vite & Styled Components
 
 
-[Admin Panel](https://github.com/fulutas/mern-ecommerce/tree/admin-panel) - ...
+[Admin Panel](https://github.com/fulutas/mern-ecommerce/tree/admin-panel) - React 17 & Redux Toolkit & Vite & MUI & FirebaseStorage
 
 ## Development
 
